@@ -10,12 +10,37 @@
 
     <title>{% block title %} {% endblock %}</title>
     <style>
+      a:link, a:visited, a:active {
+    color: white;
+  }
+  .navbar{
+    background-color: #212529;
+    justify-content: space-between;
+    padding: 0.5rem 0rem;
+  }
+  .container-fluid {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+}
+.cartbutton{
+  background-color: #7431F9;
+  color: white;
+}
+.cartbutton:hover {
+  color: white;
+  background-color: #580feb;
+}
       {% block css %} {% endblock %}
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid xs2">
     <a class="navbar-brand" href="/">pagesturned</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -39,7 +64,7 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
           </form>
-      <button type="button" class="btn btn-outline-dark bg-success mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="cart contents">Cart(<span id="cart">0</span>)</button>
+      <button type="button" class="btn cartbutton mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="cart contents">Cart(<span id="cart">0</span>)</button>
       </div>
     </div>
       </nav>
