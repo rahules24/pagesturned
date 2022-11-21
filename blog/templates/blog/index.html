@@ -49,6 +49,38 @@ p{
           </div>
           {% endfor %}
         </div>
+        <div class="col-md-6">
+          {% for poem in random3 %}
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-danger">{{poem.genre}}</strong>
+              <h3 class="mb-0" style="color: #7431F9;">{{poem.title}}</h3>
+              <div class="mb-1 text-muted">{{poem.date_added}}</div>
+              <p class="card-text mb-0">{{snippet3.0}}</p>
+              <a href="/blog/poempage/{{poem.poem_id}}" class="stretched-link">Continue reading</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+              <img class="img-thumbnail bd-placeholder-img" width="200" preserveAspectRatio="xMidYMid slice" fill="#55595c" src="/media/{{poem.image}}" alt="{{poem.title}}">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="col-md-6">
+          {% for poem in random4 %}
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-danger">{{poem.genre}}</strong>
+              <h3 class="mb-0" style="color: #7431F9;">{{poem.title}}</h3>
+              <div class="mb-1 text-muted">{{poem.date_added}}</div>
+              <p class="card-text mb-0">{{snippet4.0}}</p>
+              <a href="/blog/poempage/{{poem.poem_id}}" class="stretched-link">Continue reading</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+              <img class="img-thumbnail bd-placeholder-img" width="200" preserveAspectRatio="xMidYMid slice" fill="#55595c" src="/media/{{poem.image}}" alt="{{poem.title}}">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
 {% endblock %}

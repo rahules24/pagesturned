@@ -10,8 +10,14 @@ def index(request):
     i2 = random.randrange(1, len(Poem.objects.values('poem_id')) + 1)
     poem2 = Poem.objects.filter(poem_id=i2)
     snippet2 = Poem.objects.get(poem_id=i2).poem.split('\n[2]')
+    i3 = random.randrange(1, len(Poem.objects.values('poem_id')) + 1)
+    poem3 = Poem.objects.filter(poem_id=i3)
+    snippet3 = Poem.objects.get(poem_id=i3).poem.split('\n[2]')
+    i4 = random.randrange(1, len(Poem.objects.values('poem_id')) + 1)
+    poem4 = Poem.objects.filter(poem_id=i4)
+    snippet4 = Poem.objects.get(poem_id=i4).poem.split('\n[2]')
     return render(request, 'blog/index.html',
-                  {'random1': poem, "snippet1": snippet, 'random2': poem2, "snippet2": snippet2})
+                  {'random1': poem, "snippet1": snippet, 'random2': poem2, "snippet2": snippet2, 'random3': poem3, "snippet3": snippet3, 'random4': poem4, "snippet4": snippet4})
 
 
 def blogpost(request):
