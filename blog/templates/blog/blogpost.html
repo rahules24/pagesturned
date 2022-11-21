@@ -87,10 +87,10 @@
         <div class="p-4">
           <h4 class="fst-italic">Archives</h4>
           <ol class="list-unstyled mb-0">
-            {% for poem in poems %}
+            {% for poem in li %}
             <li><a href="/blog/poempage/{{poem.poem_id}}">{{poem.title}}</a></li>
+            {% endfor %}
           </ol>
-          {% endfor %}
         </div>
 
         <div class="p-4">

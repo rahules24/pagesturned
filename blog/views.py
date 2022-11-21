@@ -16,10 +16,11 @@ def index(request):
 
 def blogpost(request):
     poem = Poem.objects.filter(poem_id=random.randrange(1, len(Poem.objects.values('poem_id')) + 1))
-    return render(request, 'blog/blogpost.html', {'poems': poem})
+    li = Poem.objects.all()
+    return render(request, 'blog/blogpost.html', {'poems': poem, "li": li})
 
 
 def poempage(request, poemid):
     poem = Poem.objects.filter(poem_id=poemid)
     li = Poem.objects.all()
-    return render(request, 'blog/blogpost.html', {'poems': poem, "li": li})
+    return render(request, 'blog/poempage.html', {'poems': poem, "li": li})
