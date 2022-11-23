@@ -68,14 +68,15 @@
       <div class="container">
         <form method="post" id="interaction">
           {% csrf_token %}
-        <button type="submit" class="btn btn-outline-light btn-circle button" id="like">&hearts;</button>&nbsp;<span style="font-size: 18px; font-family:Georgia, 'Times New Roman', Times, serif;" id="display"></span>
+        <button type="submit" class="btn btn-outline-light btn-circle button" name="like" id="like">&hearts;</button>&nbsp;<span style="font-size: 18px; font-family:Georgia, 'Times New Roman', Times, serif;" id="display"></span>
         <button type="submit" class="btn btn-outline-light btn-circle button"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
           <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path>
         </svg></button>
         <p>
-        <textarea  rows="1" cols="30" id="comment" style="resize: none;" class="mt-4 textarea"></textarea>&nbsp;
+        <textarea  rows="1" cols="30" id="comment" name="comment" style="resize: none;" class="mt-4 textarea"></textarea>&nbsp;
         <button type="submit" class="btn btn-outline-light btn-sm mt-4 button">Comment</button>
       </p>
+      <!-- <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/poempage/1" data-width="12" data-numposts="1"></div> -->
     </form>
     </div>
     {% endfor %}
