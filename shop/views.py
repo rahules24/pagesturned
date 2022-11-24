@@ -118,7 +118,6 @@ def handlerequest(request):
         response_dict[i] = form[i]
         if i == 'CHECKSUMHASH':
             checksum = form[i]
-
     verify = paytmchecksum.verifySignature(response_dict, MERCHANT_KEY, checksum)
     thank = ''
     if verify:
@@ -127,4 +126,5 @@ def handlerequest(request):
             thank = True
         else:
             print('order was not successful because' + response_dict['RESPMSG'])
+            Orders.objects.get(order_id=response_dict['ORDERID']).delete()
     return render(request, 'shop/handlerequest.html', {'response': response_dict, 'thank': thank})
