@@ -1,31 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Payment Successful</title>
-</head>
-<body>
-    <!-- {{response}} -->
-    <div class="container" align="center">
-        {% if response.RESPCODE == '01' %}
-        <h1 style="color:green;">PAYMENT SUCCESSFUL</h1>
-        <h3>Thanks for ordering with us. Your order id is {{response.ORDERID}}.
-            <br>Track your order using our order tracker!</h3>
-            <h3>Transaction Id: {{response.TXNID}}</h3>
-            <h3>Transaction Amount: {{response.TXNAMOUNT}}</h3>
-            <h3>Payment Mode: {{response.PAYMENTMODE}}</h3>
-            <h3>Transaction Date: {{response.TXNDATE}}</h3>
-        {% else %}
-        <h1 style="color:red;">PAYMENT FAILED</h1>
-        <h3>{{response.RESPMSG}}</h3>
-        <h4>If money has been deducted, it'll be refunded within 3 working days.</h4>
-        {% endif%}
-        <button><a href="/shop/">HomePage</a></button>
-    </div>
-    <script>
-        {% if thank %}
-            localStorage.clear();
-        {% endif %}
-    </script>
-</body>
-</html>
+{% extends 'shop/basic.html' %}
+{% block title %}
+{% if response.RESPCODE == '01' %}
+PAYMENT SUCCESSFUL
+{% else %}
+PAYMENT FAILED
+{% endif%}
+{% endblock %}
+{% block css %}
+.button {
+color: white;
+background-color: #7431F9;
+}
+.button:hover {
+color: red;
+background-color: #7431F9;
+{% endblock %}
+{% block body %} 
+<!-- {{response}} -->
+<div class="container mt-3" align="center">
+    {% if response.RESPCODE == '01' %}
+    <h1 style="color:green;">PAYMENT SUCCESSFUL</h1>
+    <h3>Thanks for ordering with us. Your order id is {{response.ORDERID}}.
+        <br>Track your order using our order tracker!</h3>
+        <h3>Transaction Id: {{response.TXNID}}</h3>
+        <h3>Transaction Amount: {{response.TXNAMOUNT}}</h3>
+        <h3>Payment Mode: {{response.PAYMENTMODE}}</h3>
+        <h3>Transaction Date: {{response.TXNDATE}}</h3>
+    {% else %}
+    <h1 style="color:red;">PAYMENT FAILED</h1>
+    <h3>{{response.RESPMSG}}</h3>
+    <h4>If money has been deducted, it'll be refunded within 3 working days.</h4>
+    {% endif%}
+    <button class="btn button my-2 my-sm-0"><a class="button" href="/shop/">HomePage</a></button>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    {% if thank %}
+        localStorage.clear();
+    {% endif %}
+</script>
+{% endblock %}

@@ -13,28 +13,40 @@ def index(request):
     allprods = []
     catprods = Product.objects.values('category')
     price = Product.objects.values('price')
-    print(price)
     cats = {item['category'] for item in catprods}
     for cat in cats:
         prod = Product.objects.filter(category=cat)
-        print(prod)
         n = len(prod)
         nSlides = n // 4 + math.ceil((n / 4) - (n // 4))
-        # nn = -1
-        # li = []
-        # for i in range(1, len(prod)):
-        # nn = nn + 4
-        # if nn <= len(prod):
-        #     i += 1
-        #     li.append(nn)
         allprods.append([price, prod, range(1, nSlides), nSlides])
-    # products = Product.objects.all()
-    # print(products)
-    # print(li)
-    # params = {'no_of_slides': nslides, 'ranges': range(1, nslides), 'product': products, 'counts': li}
-    # allprods = [[products, range(1, nslides), li], [products, range(1, nslides), li]]
     params = {'allprod': allprods}
     return render(request, "shop/index.html", params)
+
+
+def searchMatch(query, item):
+    if query in item.product_name.casefold() or query in item.category.casefold() or query in item.desc.casefold() or query in item.product_name or query in item.category or query in item.desc or query in item.product_name.upper() or query in item.category.upper() or query in item.desc.upper():
+        return True
+    else:
+        return False
+
+
+def search(request):
+    query = request.GET.get('search')
+    allprods = []
+    catprods = Product.objects.values('category')
+    price = Product.objects.values('price')
+    cats = {item['category'] for item in catprods}
+    for cat in cats:
+        prodtemp = Product.objects.filter(category=cat)
+        prod = [item for item in prodtemp if searchMatch(query, item)]
+        n = len(prod)
+        nSlides = n // 4 + math.ceil((n / 4) - (n // 4))
+        if len(prod) != 0:
+            allprods.append([price, prod, range(1, nSlides), nSlides])
+    params = {'allprod': allprods, 'query': query, 'msg': ''}
+    if len(allprods) == 0 or len(query) < 3:
+        params = {'msg': 'No matching items found!'}
+    return render(request, "shop/search.html", params)
 
 
 def prodview(request, myid):
@@ -122,9 +134,9 @@ def handlerequest(request):
     thank = ''
     if verify:
         if response_dict['RESPCODE'] == '01':
-            print('order successful')
+            # print('order successful')
             thank = True
         else:
-            print('order was not successful because' + response_dict['RESPMSG'])
+            # print('order was not successful because' + response_dict['RESPMSG'])
             Orders.objects.get(order_id=response_dict['ORDERID']).delete()
     return render(request, 'shop/handlerequest.html', {'response': response_dict, 'thank': thank})
