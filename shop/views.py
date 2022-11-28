@@ -5,6 +5,7 @@ from .models import Product, Orders, OrderUpdate
 import math
 import json
 from django.views.decorators.csrf import csrf_exempt
+import re
 
 MERCHANT_KEY = 'Sn7OHM7FOki7r6Pf'
 
@@ -24,8 +25,15 @@ def index(request):
 
 
 def searchMatch(query, item):
-    if query in item.product_name.casefold() or query in item.category.casefold() or query in item.desc.casefold() or query in item.product_name or query in item.category or query in item.desc or query in item.product_name.upper() or query in item.category.upper() or query in item.desc.upper():
-        return True
+    a = []
+    query = query.casefold()
+    regex = r'\A' + query + r'|' + query
+    file = [item.desc.casefold(), item.product_name.casefold(), item.category.casefold(), item.sub_category.casefold()]
+    for i in file:
+        a.append(re.findall(regex, i))
+    for name in a:
+        if query in name:
+            return True
     else:
         return False
 
@@ -113,12 +121,12 @@ def tracker(request):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc, 'time': item.timestamp})
-                    response = json.dumps([updates, order[0].items_json], default=str)
+                    response = json.dumps({"status": "success", "updates": updates, "itemsJson": order[0].items_json}, default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse('{}')
+                return HttpResponse('{"status": "empty"}')
         except Exception:
-            return HttpResponse('{}')
+            return HttpResponse('{"status": "error"}')
     return render(request, 'shop/tracker.html')
 
 
@@ -139,4 +147,5 @@ def handlerequest(request):
         else:
             # print('order was not successful because' + response_dict['RESPMSG'])
             Orders.objects.get(order_id=response_dict['ORDERID']).delete()
+            OrderUpdate.objects.get(order_id=response_dict['ORDERID']).delete()
     return render(request, 'shop/handlerequest.html', {'response': response_dict, 'thank': thank})
